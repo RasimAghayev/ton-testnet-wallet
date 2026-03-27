@@ -1,0 +1,28 @@
+services:
+  # ── Production container (mirrors what CI deploys) ─────────────────────────
+  wallet:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: ton-testnet-wallet:local
+    ports:
+      - "3000:80"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  # ── Dev server (hot reload) ─────────────────────────────────────────────────
+  wallet-dev:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - ..:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    command: sh -c "npm ci && npm run dev -- --host 0.0.0.0"
+    profiles:
+      - dev
