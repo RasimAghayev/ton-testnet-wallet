@@ -22,8 +22,8 @@ export const tonService = {
     return txs.map((tx) => {
       const isOut = tx.outMessages.size > 0
 
-      let amount = '0'
-      let counterparty = ''
+      let amount: string
+      let counterparty: string
 
       if (isOut) {
         const outMsg = tx.outMessages.get(0)
