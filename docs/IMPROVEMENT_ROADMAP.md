@@ -6,8 +6,8 @@ This is the Phase 2.6 plan: how Phases 3-5 (`PROMPT.md`) apply here, with risks.
 
 1. **History audit — already done** (see `REPOSITORY_AUDIT.md`). Finding: clean. No secrets in full history (`git log --all -p` scanned), no force-pushes, 43-commit linear history. Nothing requiring Approval Gate #1.
 2. **Dependency bot PRs — already done.** 13 open PRs (12 Renovate + 1 Dependabot group) triaged: rebased onto the fixed `main`, 2 security-labeled merged first (`vite`, `zod`), then 10 single-package minor/patch bumps, 1 group PR closed as superseded. 0 open PRs immediately after. Side-effect requiring its own small fix: the `eslint-plugin-react-hooks` bump introduced a new lint rule, fixed with a scoped disable (see `TECHNICAL_DEBT.md` #4).
-   - **Not yet done:** Dependabot has since regenerated a smaller group PR (#40, 9 updates) reflecting the post-triage lockfile state. Reviewing and merging it is Phase 3 work this plan is now pausing in front of, pending your approval of this document.
-3. **Open PRs:** none remain beyond #40 above — covered by 3.2.
+   - **Done 2026-11-03** (post-approval) — PR #40 (the regenerated 9-package group) passed `Lint & Build` on GitHub, merged. Dependabot alerts dropped 40→8 open (4 high, 3 medium, 1 low). 0 open PRs.
+3. **Open PRs:** 0.
 4. **Branches:** clean. All merged bot branches were deleted (local + remote) as part of each merge; confirmed via `git fetch --prune` (only `main` and #40's branch remain).
 5. **Branch structure:** already `main`-only, already the default branch. No `master` to rename — no Approval Gate #4 trigger here.
 
@@ -32,6 +32,5 @@ This is the Phase 2.6 plan: how Phases 3-5 (`PROMPT.md`) apply here, with risks.
 ## Net new risks introduced by this plan
 
 - Nothing proposed here changes existing business behavior — all completed work (lint fix, dependency bumps, one scoped lint-rule disable) was behavior-preserving and verified (build/typecheck/33 tests/real GitHub CI runs, every time).
-- **One item needs your explicit approval before any further action:** merging/reviewing Dependabot PR #40 (the regenerated 9-package group bump) — paused here per this plan's own checkpoint, not because the PR itself is risky.
-- **One item is already flagged under a standing gate, not newly triggered by this plan:** the dormant SSH-deploy stage (`TECHNICAL_DEBT.md` #2) stays dormant (no secrets) unless you separately decide to configure a real deploy target — that would be its own Approval Gate #9 conversation, not something this plan assumes.
+- **One item is flagged under a standing gate, not newly triggered by this plan:** the dormant SSH-deploy stage (`TECHNICAL_DEBT.md` #2) stays dormant (no secrets) unless you separately decide to configure a real deploy target — that would be its own Approval Gate #9 conversation, not something this plan assumes.
 - **Two items are explicitly deferred, not silently dropped:** bundle code-splitting and UI/component tests — both real, judged non-urgent for a repo of this size and maturity, listed so they're visible rather than forgotten.
