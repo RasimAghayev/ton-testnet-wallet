@@ -10,7 +10,7 @@ COPY . .
 RUN npm run build
 
 # Serve stage
-FROM nginx:1.29-alpine AS runner
+FROM nginx:1.31-alpine AS runner
 
 RUN rm /etc/nginx/conf.d/default.conf
 COPY docker/nginx.conf /etc/nginx/conf.d/app.conf
