@@ -25,7 +25,7 @@ export function useTransactions() {
   }
 
   useEffect(() => {
-    load()
+    load() // eslint-disable-line react-hooks/set-state-in-effect -- intentional fetch-on-address-change; load() sets isLoading/error before awaiting the RPC call
   }, [address]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const filtered = useMemo(() => {
