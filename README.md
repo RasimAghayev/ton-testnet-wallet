@@ -1,5 +1,7 @@
 # TON Testnet Wallet
 
+![Views](https://hits.sh/github.com/RasimAghayev/ton-testnet-wallet.svg?label=views&color=0e75b6)
+
 A self-custodial TON Testnet wallet built with React, TypeScript, and TailwindCSS.
 Runs entirely in the browser — no backend required.
 
