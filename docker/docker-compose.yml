@@ -16,7 +16,7 @@ services:
 
   # ── Dev server (hot reload) ─────────────────────────────────────────────────
   wallet-dev:
-    image: node:20-alpine
+    image: node:26-alpine
     working_dir: /app
     volumes:
       - ..:/app
