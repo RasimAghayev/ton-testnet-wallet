@@ -1,0 +1,33 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "timezone": "Asia/Baku",
+  "schedule": ["before 6am on monday"],
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 2,
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 6am on monday"]
+  },
+  "vulnerabilityAlerts": {
+    "schedule": ["at any time"]
+  },
+  "packageRules": [
+    {
+      "description": "Group all non-major npm bumps into one PR per run to cut runner time and review overhead; majors stay individual (CLAUDE.md: one dependency/group at a time, each verified).",
+      "matchManagers": ["npm"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "non-major npm dependencies"
+    },
+    {
+      "description": "Group GitHub Actions bumps separately from npm so a CI-only change doesn't block on an app dependency review.",
+      "matchManagers": ["github-actions"],
+      "groupName": "GitHub Actions"
+    },
+    {
+      "description": "Group Dockerfile base-image bumps on their own schedule.",
+      "matchManagers": ["dockerfile"],
+      "groupName": "Docker base images"
+    }
+  ]
+}
