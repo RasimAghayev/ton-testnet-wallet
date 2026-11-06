@@ -1,4 +1,4 @@
-export type TransactionType = 'in' | 'out'
+type TransactionType = 'in' | 'out'
 
 export interface Transaction {
   hash: string

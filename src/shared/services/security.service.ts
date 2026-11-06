@@ -1,6 +1,6 @@
 import { Address } from '@ton/core'
 
-export type AddressRisk = 'safe' | 'suspicious' | 'invalid'
+type AddressRisk = 'safe' | 'suspicious' | 'invalid'
 
 export interface AddressCheckResult {
   risk: AddressRisk
