@@ -63,3 +63,68 @@ vulnerabilities, size, and the latest stable version at decision time.
   used meanwhile"). Tracked in `docs/TECHNICAL_DEBT.md`. Re-check next time
   `@ton/ton` publishes a release, or the next time any dependency's
   vulnerability sweep runs.
+
+## 2026-11-06 — `minimatch` forced to `11.0.5` via `overrides` (fix applied)
+
+- **Context:** `npm audit` (live registry check, not the `deps/` snapshot)
+  surfaced GHSA-g3hv-75wg-m249 / CVE-2026-118764 (medium, published
+  2026-10-30 — about a week before this check, likely why GitHub's
+  Dependabot alerts for this repo hadn't caught up yet): a glob-pattern
+  amplification DoS in `minimatch`'s `firstPhasePreProcess()`,
+  `vulnerable_version_range: ">= 7.0.0, < 11.0.1"`, `first_patched_version:
+  "11.0.1"`.
+- **What already covers this:** nothing — this is a transitive,
+  single-copy dependency (`npm ls minimatch --all` / direct lockfile
+  inspection confirm exactly one deduped copy in the whole tree, pinned at
+  `10.2.6` by both `eslint@10.14.0` (via `@eslint/config-array`) and
+  `typescript-eslint@8.72.1` (via `@typescript-eslint/typescript-estree`) —
+  both already the latest published release of each tool, neither has
+  bumped its own internal `minimatch` pin to `11.x` yet.
+- **Why an override is safe here (unlike the `zod`/`elliptic` blockers):**
+  `minimatch@11.0.5`'s package `exports` map and `engines.node` range are
+  identical in shape to `10.2.6`'s (`npm view minimatch@11.0.5 exports` vs.
+  `@10.2.6` — same dual ESM/CJS structure); there is exactly one copy in
+  the tree, so the override can't collide with a second, differently
+  consumed copy.
+- **Maintenance status:** `minimatch` is actively maintained (isaacs);
+  advisory was GitHub-reviewed the same day it was reported.
+- **License:** ISC, unaffected by the version bump.
+- **Known vulnerabilities:** the one above; patched by this change.
+- **Size impact:** negligible (single transitive package, same major
+  export surface).
+- **Latest stable at decision time:** `11.0.5` (`npm view minimatch
+  version`).
+- **Verification:** `npm audit` moderate-severity count dropped `9 → 0`;
+  `npm run lint` / `npm run test:run` (55/55) / `npm run build` all clean
+  in Docker (`node:26.13.0-alpine3.24`) — see Phase 6 handoff.
+
+## 2026-11-06 — `elliptic` nested inside `vite-plugin-node-polyfills`'s chain stays unpatched (accepted, documented blocker)
+
+- **Context:** Dependabot alert #1 / `npm audit` flags GHSA-848j-6mx2-7j84
+  ("Elliptic Uses a Cryptographic Primitive with a Risky Implementation",
+  LOW, `vulnerable_version_range: "<= 6.6.1"`, `first_patched_version:
+  null`). The flagged copy is nested four levels deep:
+  `vite-plugin-node-polyfills@0.28.0` → `node-stdlib-browser@1.3.1` →
+  `crypto-browserify@3.12.1` → `browserify-sign@4.2.6` / `create-ecdh@4.0.4`
+  → `elliptic@6.6.1`. Dependabot marks its scope as `runtime` (bundled into
+  the production browser build via the Vite node-polyfills plugin), unlike
+  the dev-only `minimatch` fix above.
+- **Why it can't be fixed from this repo:** `first_patched_version` is
+  `null` — this advisory has **never** had a fix released on any
+  `elliptic` version, including the current latest (`6.6.1`, confirmed via
+  `npm view elliptic versions`). `vite-plugin-node-polyfills`,
+  `node-stdlib-browser`, `crypto-browserify`, `browserify-sign`, and
+  `create-ecdh` are all independently confirmed already at their own
+  latest published version (`npm view <pkg> version` for each) and all
+  still declare `elliptic` as a dependency — there is no newer release of
+  anything in the chain that drops it.
+- **What existing deps already cover this:** none — forcing an
+  `overrides` entry wouldn't help since there is no newer `elliptic`
+  version to force to; the installed `6.6.1` already *is* the latest.
+- **Highest compatible version used meanwhile:** `elliptic@6.6.1`
+  (current latest), already in place — no downgrade needed, nothing newer
+  exists.
+- **Status:** accepted blocker per `CLAUDE.md` standing decision 1.
+  Tracked in `docs/TECHNICAL_DEBT.md` #15. Re-check whenever `elliptic`
+  publishes a release, or `vite-plugin-node-polyfills`'s dependency chain
+  moves off `crypto-browserify`.
