@@ -37,6 +37,14 @@ snapshot.
   `npm run build`) fails with ~30 `TS2339` errors on
   `toBeInTheDocument`/`toHaveClass`/`toBeEmptyDOMElement` across the
   Dashboard/SendPage/ReceivePage component tests.
+- **`minimatch` forced to `11.0.5` via `overrides`** - fixes
+  GHSA-g3hv-75wg-m249 / CVE-2026-118764 (medium, glob-pattern
+  amplification DoS), found live via `npm audit` rather than
+  Dependabot (the advisory was ~1 week old at check time; Dependabot
+  alerts hadn't caught up yet). The sole, already-deduped copy in the
+  tree was pinned at `10.2.6` by `eslint`/`typescript-eslint` (both
+  already their own latest release); `11.0.5`'s export shape and
+  Node engine range are identical, so the override is low-risk.
 - All other npm dependencies within their existing `package.json`
   semver ranges (`react`, `react-dom`, `zustand`, `zod`, `@ton/ton`,
   `@testing-library/jest-dom`, `@testing-library/react`,
@@ -79,6 +87,11 @@ snapshot.
   `7.0.2`): `typescript-eslint@8.72.1` (itself already latest)
   declares `peerDependencies.typescript: '>=4.8.4 <6.1.0'`, excluding
   both TS 6 and TS 7; TS 6 never shipped a stable release either.
+- `elliptic` stays at `6.6.1` (current latest) with an unpatched LOW
+  advisory (GHSA-848j-6mx2-7j84) nested inside
+  `vite-plugin-node-polyfills`'s `crypto-browserify` chain -
+  `first_patched_version` is `null`, no fix has ever existed for this
+  advisory on any `elliptic` release.
 
 ### Out of scope (flagged for later phases, not fixed here)
 
