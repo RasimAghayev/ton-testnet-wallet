@@ -3,6 +3,67 @@
 All notable changes to this project are documented here.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [Unreleased] - Phase 7 dead code cleanup (2026-11-06)
+
+Dead-code audit per `PROMPT.md` Phase 7. No `docs/BASELINE.md` existed
+to verify against (Phase 5 gap, already tracked as
+`docs/TECHNICAL_DEBT.md` #12) - used a fresh Docker `npm ci && npm run
+lint && npx tsc -b && npm run test:run && npm run build` run on the
+pre-change tree as the regression baseline instead, then confirmed the
+production bundle's chunk hashes/sizes are byte-identical after every
+change below.
+
+Tooling: `knip`, `ts-prune` (pointed at `tsconfig.app.json` - the root
+`tsconfig.json` is solution-style with `"files": []` and silently
+makes `ts-prune` report nothing against it), `depcheck`, and a
+one-off `vitest run --coverage` pass, cross-validated against each
+other and against manual `grep`/`npm ls` checks before deleting
+anything.
+
+### Removed
+
+- **Unused scaffold assets** - `src/assets/hero.png`, `react.svg`,
+  `vite.svg`. Zero references anywhere in the project; `react.svg`/
+  `vite.svg` are Vite's default template placeholders, never wired
+  into this app's UI. Vite only bundles `src/` files that are actually
+  imported, so this has no effect on the production build.
+- **`process` dependency** (`package.json`) - flagged by both `knip`
+  and `depcheck`; confirmed via `grep` (zero references to the literal
+  token anywhere in `src/`) and via `npm ls process` after removal,
+  which shows it is still present, now purely as
+  `vite-plugin-node-polyfills -> node-stdlib-browser -> process` - i.e.
+  the top-level entry was always a redundant duplicate of what the
+  polyfill plugin already carries internally. `vite.config.ts`'s
+  `nodePolyfills({ include: [...], globals: { process: true } })`
+  config was deliberately left untouched (it controls the plugin's own
+  bundled polyfill, not this npm package - removing it would be a
+  behavior change, not dead-code removal).
+- **Dead/unnecessary type exports**, cross-validated by `knip` and
+  `ts-prune`:
+  - `WalletState` (`src/shared/types/wallet.ts`) - zero references
+    anywhere, including its own file (the real wallet store,
+    `entities/wallet/model/wallet.store.ts`, defines its own
+    `WalletStore` interface instead). Deleted.
+  - `TransactionType` (`src/shared/types/transaction.ts`) - used only
+    within its own file; un-exported (kept, just no longer part of any
+    external surface).
+  - `AddressRisk` (`src/shared/services/security.service.ts`) - same
+    pattern, used only within its own file (the type that IS consumed
+    elsewhere, `AddressCheckResult`, is unaffected); un-exported.
+
+`buffer` was also flagged by `knip`/`depcheck` as an unused dependency
+but kept - `src/global.d.ts` imports it for real
+(`import { Buffer as BufferType } from 'buffer'`, used to type the
+global `Buffer` the polyfill plugin injects), a pattern both tools'
+static import-graph analysis misses for ambient `.d.ts` files. Verified
+`tailwindcss` is also a false positive from `depcheck` alone (used via
+`@import "tailwindcss"` in `src/index.css`, which `depcheck` doesn't
+parse) - `knip` correctly did not flag it.
+
+No restructuring: the existing Feature-Sliced Design layout
+(`app/entities/features/shared`) already matches current
+Vite+React+TS conventions: nothing needed re-shaping.
+
 ## [Unreleased] - Phase 6 dependency upgrade (2026-11-06)
 
 Full sweep to latest stable across runtime, framework, libraries, dev
