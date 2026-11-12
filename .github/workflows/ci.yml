@@ -4,8 +4,9 @@ on:
   push:
     branches: [main]
     tags: ['v*']
+  # Every PR gets the full pipeline, whatever its base branch; the push
+  # trigger covers only main and tags, so this is what validates a PR branch.
   pull_request:
-    branches: [main]
 
 # Least privilege at the top; jobs that publish widen it locally.
 permissions:
