@@ -1,23 +1,23 @@
-import { useNavigate } from 'react-router-dom'
-import { useDashboard } from '../hooks/useDashboard'
-import { CopyButton } from '@/shared/components/ui/CopyButton'
-import { Button } from '@/shared/components/ui/Button'
-import { Spinner } from '@/shared/components/ui/Spinner'
-import { useWalletStore } from '@/entities/wallet/model/wallet.store'
-import { TON_CONFIG } from '@/shared/config/ton'
-import { truncateAddress } from '@/shared/utils/format'
+import { useNavigate } from 'react-router-dom';
+import { useDashboard } from '../hooks/useDashboard';
+import { CopyButton } from '@/shared/components/ui/CopyButton';
+import { Button } from '@/shared/components/ui/Button';
+import { Spinner } from '@/shared/components/ui/Spinner';
+import { useWalletStore } from '@/entities/wallet/model/wallet.store';
+import { TON_CONFIG } from '@/shared/config/ton';
+import { truncateAddress } from '@/shared/utils/format';
 
 export function Dashboard() {
-  const navigate = useNavigate()
-  const { address, balance, refresh } = useDashboard()
-  const clearWallet = useWalletStore((s) => s.clearWallet)
+  const navigate = useNavigate();
+  const { address, balance, refresh } = useDashboard();
+  const clearWallet = useWalletStore(s => s.clearWallet);
 
   const handleDisconnect = () => {
     if (window.confirm('Are you sure you want to remove this wallet?')) {
-      clearWallet()
-      navigate('/setup')
+      clearWallet();
+      navigate('/setup');
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-slate-950 p-4">
@@ -41,9 +41,7 @@ export function Dashboard() {
 
         {/* Balance Card */}
         <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 rounded-2xl p-6 mb-4">
-          <p className="text-xs text-slate-400 uppercase tracking-wider mb-2">
-            Total Balance
-          </p>
+          <p className="text-xs text-slate-400 uppercase tracking-wider mb-2">Total Balance</p>
           <div className="flex items-end gap-2 mb-4">
             {balance === null ? (
               <Spinner size="md" />
@@ -77,18 +75,10 @@ export function Dashboard() {
 
         {/* Actions */}
         <div className="grid grid-cols-2 gap-3 mb-6">
-          <Button
-            variant="primary"
-            className="w-full py-3"
-            onClick={() => navigate('/send')}
-          >
+          <Button variant="primary" className="w-full py-3" onClick={() => navigate('/send')}>
             ↑ Send
           </Button>
-          <Button
-            variant="secondary"
-            className="w-full py-3"
-            onClick={() => navigate('/receive')}
-          >
+          <Button variant="secondary" className="w-full py-3" onClick={() => navigate('/receive')}>
             ↓ Receive
           </Button>
         </div>
@@ -98,9 +88,7 @@ export function Dashboard() {
           onClick={() => navigate('/transactions')}
           className="w-full flex items-center justify-between p-4 bg-slate-900 border border-slate-800 rounded-xl hover:border-slate-600 transition-colors cursor-pointer"
         >
-          <span className="text-sm font-medium text-slate-300">
-            Transaction History
-          </span>
+          <span className="text-sm font-medium text-slate-300">Transaction History</span>
           <span className="text-slate-500">→</span>
         </button>
 
@@ -131,5 +119,5 @@ export function Dashboard() {
         </button>
       </div>
     </div>
-  )
+  );
 }

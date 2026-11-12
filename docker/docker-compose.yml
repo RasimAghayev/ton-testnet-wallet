@@ -6,23 +6,44 @@ services:
       dockerfile: docker/Dockerfile
     image: ton-testnet-wallet:local
     ports:
-      - "3000:80"
+      - '8080:8080'
     restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - TON_RPC_ENDPOINT=https://testnet.toncenter.com
+      - TON_RPC_RATE_LIMIT=30
     healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost/health"]
+      test: ['CMD', 'wget', '-qO-', 'http://localhost:8080/health/ready']
       interval: 30s
       timeout: 5s
       retries: 3
+      start_period: 10s
 
   # ── Dev server (hot reload) ─────────────────────────────────────────────────
   wallet-dev:
-    image: node:20-alpine
+    image: node:20.18.1-alpine3.21
     working_dir: /app
     volumes:
       - ..:/app
       - /app/node_modules
     ports:
-      - "5173:5173"
+      - '5173:5173'
     command: sh -c "npm ci && npm run dev -- --host 0.0.0.0"
+    environment:
+      - NODE_ENV=development
+      - TON_RPC_ENDPOINT=https://testnet.toncenter.com
     profiles:
       - dev
+
+  # ── Test runner (for CI/local verification) ─────────────────────────────────
+  wallet-test:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      target: test
+    image: ton-testnet-wallet:test
+    environment:
+      - NODE_ENV=test
+      - TON_RPC_ENDPOINT=https://testnet.toncenter.com
+    profiles:
+      - test

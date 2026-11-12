@@ -1,10 +1,10 @@
-import { Address } from '@ton/core'
+import { Address } from '@ton/core';
 
-export type AddressRisk = 'safe' | 'suspicious' | 'invalid'
+export type AddressRisk = 'safe' | 'suspicious' | 'invalid';
 
 export interface AddressCheckResult {
-  risk: AddressRisk
-  reason?: string
+  risk: AddressRisk;
+  reason?: string;
 }
 
 /**
@@ -12,10 +12,10 @@ export interface AddressCheckResult {
  */
 function validateAddress(address: string): boolean {
   try {
-    Address.parse(address.trim())
-    return true
+    Address.parse(address.trim());
+    return true;
   } catch {
-    return false
+    return false;
   }
 }
 
@@ -24,12 +24,9 @@ function validateAddress(address: string): boolean {
  * Browsers restrict clipboard access — we compare the paste event's
  * getData() value with the current input value after paste.
  */
-function checkPastedAddress(
-  pastedValue: string,
-  clipboardData: string,
-): AddressCheckResult {
+function checkPastedAddress(pastedValue: string, clipboardData: string): AddressCheckResult {
   if (!validateAddress(pastedValue)) {
-    return { risk: 'invalid', reason: 'Invalid TON address format.' }
+    return { risk: 'invalid', reason: 'Invalid TON address format.' };
   }
 
   // If the pasted content differs from what clipboard reports — hijack suspect
@@ -38,10 +35,10 @@ function checkPastedAddress(
       risk: 'suspicious',
       reason:
         'Pasted address differs from clipboard content. Possible clipboard hijacking detected.',
-    }
+    };
   }
 
-  return { risk: 'safe' }
+  return { risk: 'safe' };
 }
 
 /**
@@ -50,32 +47,28 @@ function checkPastedAddress(
  * - zero-address detection
  * - partial match with own address (accidental self-send)
  */
-function assessAddress(
-  address: string,
-  ownAddress?: string,
-): AddressCheckResult {
+function assessAddress(address: string, ownAddress?: string): AddressCheckResult {
   if (!validateAddress(address)) {
-    return { risk: 'invalid', reason: 'Invalid TON address.' }
+    return { risk: 'invalid', reason: 'Invalid TON address.' };
   }
 
-  const ZERO_ADDRESS =
-    'UQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJKZ'
+  const ZERO_ADDRESS = 'UQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJKZ';
   if (address === ZERO_ADDRESS) {
-    return { risk: 'suspicious', reason: 'Sending to zero address.' }
+    return { risk: 'suspicious', reason: 'Sending to zero address.' };
   }
 
   if (ownAddress && address === ownAddress) {
     return {
       risk: 'suspicious',
       reason: 'You are sending funds to your own address.',
-    }
+    };
   }
 
-  return { risk: 'safe' }
+  return { risk: 'safe' };
 }
 
 export const securityService = {
   validateAddress,
   checkPastedAddress,
   assessAddress,
-}
+};

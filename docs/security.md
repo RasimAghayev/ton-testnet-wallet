@@ -2,14 +2,14 @@
 
 ## Threat Model
 
-| Threat | Impact | Mitigation |
-| --- | --- | --- |
-| Clipboard hijacking | Funds sent to attacker address | Paste-event monitoring + visual warning |
-| Address tampering | Same as above | Address checksum validation (TON format) |
-| Self-send / zero-address | User error, funds locked | Address risk assessment before send |
-| Mnemonic exposure | Full wallet takeover | Warning UI; never transmitted; stored locally |
-| XSS | Key theft | CSP headers in nginx; no `eval` |
-| Phishing | Mnemonic submission | Testnet-only badge; user education in UI |
+| Threat                   | Impact                         | Mitigation                                    |
+| ------------------------ | ------------------------------ | --------------------------------------------- |
+| Clipboard hijacking      | Funds sent to attacker address | Paste-event monitoring + visual warning       |
+| Address tampering        | Same as above                  | Address checksum validation (TON format)      |
+| Self-send / zero-address | User error, funds locked       | Address risk assessment before send           |
+| Mnemonic exposure        | Full wallet takeover           | Warning UI; never transmitted; stored locally |
+| XSS                      | Key theft                      | CSP headers in nginx; no `eval`               |
+| Phishing                 | Mnemonic submission            | Testnet-only badge; user education in UI      |
 
 ---
 

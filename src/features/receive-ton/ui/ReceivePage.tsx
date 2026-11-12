@@ -1,14 +1,14 @@
-import { useNavigate } from 'react-router-dom'
-import { QRCodeSVG } from 'qrcode.react'
-import { useReceive } from '../hooks/useReceive'
-import { CopyButton } from '@/shared/components/ui/CopyButton'
-import { Button } from '@/shared/components/ui/Button'
+import { useNavigate } from 'react-router-dom';
+import { QRCodeSVG } from 'qrcode.react';
+import { useReceive } from '../hooks/useReceive';
+import { CopyButton } from '@/shared/components/ui/CopyButton';
+import { Button } from '@/shared/components/ui/Button';
 
 export function ReceivePage() {
-  const navigate = useNavigate()
-  const { address } = useReceive()
+  const navigate = useNavigate();
+  const { address } = useReceive();
 
-  if (!address) return null
+  if (!address) return null;
 
   return (
     <div className="min-h-screen bg-slate-950 p-4">
@@ -44,19 +44,14 @@ export function ReceivePage() {
           <CopyButton text={address} label="Copy address" />
 
           <p className="text-xs text-slate-500 text-center px-4">
-            Only send TON testnet tokens to this address. This is a testnet
-            wallet.
+            Only send TON testnet tokens to this address. This is a testnet wallet.
           </p>
         </div>
 
-        <Button
-          variant="secondary"
-          className="w-full mt-4"
-          onClick={() => navigate('/dashboard')}
-        >
+        <Button variant="secondary" className="w-full mt-4" onClick={() => navigate('/dashboard')}>
           Done
         </Button>
       </div>
     </div>
-  )
+  );
 }

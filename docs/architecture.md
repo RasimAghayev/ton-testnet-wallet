@@ -71,13 +71,13 @@ src/
 
 ## Key Design Decisions
 
-| Decision | Reason |
-| --- | --- |
-| No backend | Self-custodial; keys never leave the browser |
-| WalletContractV4 | Current standard TON wallet contract |
+| Decision              | Reason                                                     |
+| --------------------- | ---------------------------------------------------------- |
+| No backend            | Self-custodial; keys never leave the browser               |
+| WalletContractV4      | Current standard TON wallet contract                       |
 | Vite over CRA/Next.js | Fastest cold start, native ESM, no SSR needed for a wallet |
-| Zustand over Redux | Minimal boilerplate, sufficient for this scope |
-| Zod validation | Type-safe runtime validation without extra complexity |
-| localStorage | Simple, no IndexedDB overhead for this use case |
-| Feature-Sliced Design | Clear separation, each feature owns its own logic |
-| Vitest over Jest | Same config as Vite — zero additional setup |
+| Zustand over Redux    | Minimal boilerplate, sufficient for this scope             |
+| Zod validation        | Type-safe runtime validation without extra complexity      |
+| localStorage          | Simple, no IndexedDB overhead for this use case            |
+| Feature-Sliced Design | Clear separation, each feature owns its own logic          |
+| Vitest over Jest      | Same config as Vite — zero additional setup                |

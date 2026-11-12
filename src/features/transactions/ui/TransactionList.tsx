@@ -1,15 +1,14 @@
-import { useNavigate } from 'react-router-dom'
-import { useTransactions } from '../hooks/useTransactions'
-import { TransactionItem } from './TransactionItem'
-import { Input } from '@/shared/components/ui/Input'
-import { Button } from '@/shared/components/ui/Button'
-import { Spinner } from '@/shared/components/ui/Spinner'
-import { Alert } from '@/shared/components/ui/Alert'
+import { useNavigate } from 'react-router-dom';
+import { useTransactions } from '../hooks/useTransactions';
+import { TransactionItem } from './TransactionItem';
+import { Input } from '@/shared/components/ui/Input';
+import { Button } from '@/shared/components/ui/Button';
+import { Spinner } from '@/shared/components/ui/Spinner';
+import { Alert } from '@/shared/components/ui/Alert';
 
 export function TransactionList() {
-  const navigate = useNavigate()
-  const { transactions, isLoading, error, query, setQuery, reload } =
-    useTransactions()
+  const navigate = useNavigate();
+  const { transactions, isLoading, error, query, setQuery, reload } = useTransactions();
 
   return (
     <div className="min-h-screen bg-slate-950 p-4">
@@ -34,7 +33,7 @@ export function TransactionList() {
           <Input
             placeholder="Search by address or amount..."
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={e => setQuery(e.target.value)}
           />
         </div>
 
@@ -62,10 +61,9 @@ export function TransactionList() {
             </div>
           )}
 
-          {!isLoading &&
-            transactions.map((tx) => <TransactionItem key={tx.hash} tx={tx} />)}
+          {!isLoading && transactions.map(tx => <TransactionItem key={tx.hash} tx={tx} />)}
         </div>
       </div>
     </div>
-  )
+  );
 }

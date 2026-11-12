@@ -1,6 +1,6 @@
-import { defineConfig } from 'vitest/config'
-import { nodePolyfills } from 'vite-plugin-node-polyfills'
-import { resolve } from 'path'
+import { defineConfig } from 'vitest/config';
+import { nodePolyfills } from 'vite-plugin-node-polyfills';
+import { resolve } from 'path';
 
 export default defineConfig({
   plugins: [
@@ -19,4 +19,4 @@ export default defineConfig({
       '@': resolve(__dirname, './src'),
     },
   },
-})
+});

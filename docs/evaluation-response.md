@@ -4,16 +4,16 @@
 
 All required functionality is covered:
 
-| Requirement | Status | Notes |
-|---|---|---|
-| Create wallet | ✅ | BIP39 mnemonic, WalletContractV4 |
-| Import wallet | ✅ | 24-word mnemonic, validated before import |
-| Wallet address | ✅ | Dashboard + Receive screen |
-| TON balance | ✅ | Fetched from testnet RPC, auto-refresh every 15s |
-| Transaction history | ✅ | Last 20 TXs, real-time search |
-| Receive screen | ✅ | Address + copy button + QR code (bonus) |
-| Send screen | ✅ | Address, amount, comment, validation, status feedback |
-| Risk warnings | ✅ | Address substitution protection (see Security section) |
+| Requirement         | Status | Notes                                                  |
+| ------------------- | ------ | ------------------------------------------------------ |
+| Create wallet       | ✅     | BIP39 mnemonic, WalletContractV4                       |
+| Import wallet       | ✅     | 24-word mnemonic, validated before import              |
+| Wallet address      | ✅     | Dashboard + Receive screen                             |
+| TON balance         | ✅     | Fetched from testnet RPC, auto-refresh every 15s       |
+| Transaction history | ✅     | Last 20 TXs, real-time search                          |
+| Receive screen      | ✅     | Address + copy button + QR code (bonus)                |
+| Send screen         | ✅     | Address, amount, comment, validation, status feedback  |
+| Risk warnings       | ✅     | Address substitution protection (see Security section) |
 
 ---
 
@@ -33,26 +33,26 @@ Each feature owns its UI, hooks, and business logic. Shared utilities are in the
 
 **Layer responsibilities:**
 
-| Layer | Responsibility |
-|---|---|
-| UI (React) | Render, user interaction |
-| Hooks | Local state, side effects, form logic |
-| Services | Pure logic — wallet, blockchain, security, storage |
-| Store (Zustand) | Cross-feature shared state |
-| Storage (localStorage) | Persistence between sessions |
+| Layer                  | Responsibility                                     |
+| ---------------------- | -------------------------------------------------- |
+| UI (React)             | Render, user interaction                           |
+| Hooks                  | Local state, side effects, form logic              |
+| Services               | Pure logic — wallet, blockchain, security, storage |
+| Store (Zustand)        | Cross-feature shared state                         |
+| Storage (localStorage) | Persistence between sessions                       |
 
 ---
 
 ## Tech stack choices
 
-| Tool | Why chosen |
-|---|---|
-| Vite + React + TypeScript | Fast build, minimal config, type safety |
-| TailwindCSS | Utility-first, no CSS file sprawl, easy dark theme |
-| Zustand | Minimal boilerplate, sufficient for this scope. Redux would be over-engineering |
-| Zod | Type-safe runtime validation that integrates with react-hook-form |
-| @ton/core + @ton/ton | Official TON SDK. No alternatives needed |
-| Vitest | Same config as Vite, no Jest setup overhead |
+| Tool                      | Why chosen                                                                      |
+| ------------------------- | ------------------------------------------------------------------------------- |
+| Vite + React + TypeScript | Fast build, minimal config, type safety                                         |
+| TailwindCSS               | Utility-first, no CSS file sprawl, easy dark theme                              |
+| Zustand                   | Minimal boilerplate, sufficient for this scope. Redux would be over-engineering |
+| Zod                       | Type-safe runtime validation that integrates with react-hook-form               |
+| @ton/core + @ton/ton      | Official TON SDK. No alternatives needed                                        |
+| Vitest                    | Same config as Vite, no Jest setup overhead                                     |
 
 ---
 
@@ -62,7 +62,7 @@ The threat: malware intercepts clipboard content and replaces a legitimate TON a
 
 **Detection approach:**
 
-1. **Paste event monitoring** — on every paste event, the `clipboardData.getData('text')` value is compared against the value that actually lands in the input field. If they differ, the user sees a warning: *"Pasted address differs from clipboard content. Possible clipboard hijacking detected."*
+1. **Paste event monitoring** — on every paste event, the `clipboardData.getData('text')` value is compared against the value that actually lands in the input field. If they differ, the user sees a warning: _"Pasted address differs from clipboard content. Possible clipboard hijacking detected."_
 
 2. **Address format validation** — `Address.parse()` from `@ton/core` performs a full checksum validation. Invalid or truncated addresses are rejected immediately.
 
@@ -78,13 +78,13 @@ The threat: malware intercepts clipboard content and replaces a legitimate TON a
 
 ## Compromises made
 
-| Compromise | Reason | Production fix |
-|---|---|---|
-| Mnemonic stored in plaintext localStorage | Testnet only — task states "not production-grade security required" | Encrypt with user password (AES-256-GCM) |
-| No session timeout | Testnet scope | Add inactivity lock after N minutes |
-| Last 20 transactions only | Avoids pagination complexity for this scope | Add cursor-based pagination |
-| No unit tests for UI components | Pure logic is tested; UI tests need render environment setup | Add @testing-library/react tests for forms |
-| Single network (testnet) | Assignment requirement | Add network selector with mainnet support |
+| Compromise                                | Reason                                                              | Production fix                             |
+| ----------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------ |
+| Mnemonic stored in plaintext localStorage | Testnet only — task states "not production-grade security required" | Encrypt with user password (AES-256-GCM)   |
+| No session timeout                        | Testnet scope                                                       | Add inactivity lock after N minutes        |
+| Last 20 transactions only                 | Avoids pagination complexity for this scope                         | Add cursor-based pagination                |
+| No unit tests for UI components           | Pure logic is tested; UI tests need render environment setup        | Add @testing-library/react tests for forms |
+| Single network (testnet)                  | Assignment requirement                                              | Add network selector with mainnet support  |
 
 ---
 
@@ -92,13 +92,14 @@ The threat: malware intercepts clipboard content and replaces a legitimate TON a
 
 33 unit tests across 3 test files:
 
-| File | Coverage |
-|---|---|
+| File                       | Coverage                                                        |
+| -------------------------- | --------------------------------------------------------------- |
 | `security.service.test.ts` | Address validation, clipboard hijack detection, risk assessment |
-| `storage.service.test.ts` | Save, load, clear, malformed JSON recovery |
-| `validation.test.ts` | All Zod schema rules for send form |
+| `storage.service.test.ts`  | Save, load, clear, malformed JSON recovery                      |
+| `validation.test.ts`       | All Zod schema rules for send form                              |
 
 Run:
+
 ```bash
 npm test
 ```

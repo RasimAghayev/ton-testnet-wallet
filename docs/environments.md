@@ -4,13 +4,13 @@
 
 This application runs in two modes depending on configuration:
 
-| | Testnet | Mainnet (future) |
-|---|---|---|
-| Network | TON Testnet | TON Mainnet |
-| RPC Endpoint | `testnet.toncenter.com` | `toncenter.com` |
-| Explorer | `testnet.tonviewer.com` | `tonviewer.com` |
-| Tokens | Free (faucet) | Real TON |
-| Risk | Zero | Financial |
+|              | Testnet                 | Mainnet (future) |
+| ------------ | ----------------------- | ---------------- |
+| Network      | TON Testnet             | TON Mainnet      |
+| RPC Endpoint | `testnet.toncenter.com` | `toncenter.com`  |
+| Explorer     | `testnet.tonviewer.com` | `tonviewer.com`  |
+| Tokens       | Free (faucet)           | Real TON         |
+| Risk         | Zero                    | Financial        |
 
 > **Current scope:** this assignment targets **Testnet only**. Mainnet column is listed for architectural awareness.
 
@@ -27,17 +27,17 @@ VITE_TON_API_KEY=        # optional — without key: 1 req/s limit
 
 ### Rate Limits
 
-| Condition | Limit |
-|---|---|
-| No API key | 1 request / second |
+| Condition    | Limit                |
+| ------------ | -------------------- |
+| No API key   | 1 request / second   |
 | With API key | 10 requests / second |
 
 Get a free testnet API key: Telegram → **@tonapibot** → "Get testnet key"
 
 ### Get Testnet Tokens
 
-| Source | Link | Limit |
-|---|---|---|
+| Source     | Link               | Limit           |
+| ---------- | ------------------ | --------------- |
 | Faucet bot | @testgiver_ton_bot | 2 tTON / 30 min |
 
 ### UI Indicators
@@ -122,27 +122,27 @@ docker run -p 3000:80 ton-wallet:local
 
 Run these checks after each build or deploy:
 
-| Check | Dev `:5173` | Preview `:4173` | Docker `:3000` |
-|---|---|---|---|
-| App loads without blank screen | ✓ | ✓ | ✓ |
-| No `Buffer is not defined` console error | ✓ | ✓ | ✓ |
-| Setup page renders tabs | ✓ | ✓ | ✓ |
-| "Get test TON" link visible | ✓ | ✓ | ✓ |
-| "Get API key" link visible | ✓ | ✓ | ✓ |
-| Wallet creation works | ✓ | ✓ | ✓ |
-| Address validation accepts `UQ...` | ✓ | ✓ | ✓ |
-| Balance fetches from testnet | ✓ | ✓ | ✓ |
-| `GET /health` returns `ok` | — | — | ✓ |
-| SPA routing works on refresh | — | — | ✓ |
+| Check                                    | Dev `:5173` | Preview `:4173` | Docker `:3000` |
+| ---------------------------------------- | ----------- | --------------- | -------------- |
+| App loads without blank screen           | ✓           | ✓               | ✓              |
+| No `Buffer is not defined` console error | ✓           | ✓               | ✓              |
+| Setup page renders tabs                  | ✓           | ✓               | ✓              |
+| "Get test TON" link visible              | ✓           | ✓               | ✓              |
+| "Get API key" link visible               | ✓           | ✓               | ✓              |
+| Wallet creation works                    | ✓           | ✓               | ✓              |
+| Address validation accepts `UQ...`       | ✓           | ✓               | ✓              |
+| Balance fetches from testnet             | ✓           | ✓               | ✓              |
+| `GET /health` returns `ok`               | —           | —               | ✓              |
+| SPA routing works on refresh             | —           | —               | ✓              |
 
 ---
 
 ## Known Testnet Constraints
 
-| Constraint | Detail |
-|---|---|
-| TX finality | ~5 seconds |
-| Balance auto-refresh | Every 15 seconds |
-| Mnemonic storage | Plaintext in localStorage (acceptable for testnet) |
-| No real funds | All tokens have zero real-world value |
-| Testnet stability | Occasional RPC downtime — not an app bug |
+| Constraint           | Detail                                             |
+| -------------------- | -------------------------------------------------- |
+| TX finality          | ~5 seconds                                         |
+| Balance auto-refresh | Every 15 seconds                                   |
+| Mnemonic storage     | Plaintext in localStorage (acceptable for testnet) |
+| No real funds        | All tokens have zero real-world value              |
+| Testnet stability    | Occasional RPC downtime — not an app bug           |
