@@ -24,10 +24,10 @@ docker --version   # verify
 
 In your repository: **Settings → Secrets and variables → Actions**
 
-| Secret | Value |
-| --- | --- |
-| `DEPLOY_HOST` | Your server IP or domain |
-| `DEPLOY_USER` | SSH username (e.g. `ubuntu`) |
+| Secret           | Value                            |
+| ---------------- | -------------------------------- |
+| `DEPLOY_HOST`    | Your server IP or domain         |
+| `DEPLOY_USER`    | SSH username (e.g. `ubuntu`)     |
 | `DEPLOY_SSH_KEY` | Private SSH key (RSA or ED25519) |
 
 The `GITHUB_TOKEN` is provided automatically by Actions.

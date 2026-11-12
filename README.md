@@ -22,16 +22,16 @@ Runs entirely in the browser — no backend required.
 
 ## Tech Stack
 
-| Layer | Technology | Reason |
-| --- | --- | --- |
-| UI | React 19 + TypeScript | Industry standard, strict typing |
-| Styling | TailwindCSS v4 | Utility-first, zero runtime CSS |
-| State | Zustand | Minimal boilerplate |
-| Validation | Zod | Type-safe runtime validation |
-| Blockchain | @ton/ton, @ton/crypto | Official TON SDK |
-| Bundler | Vite | Fast DX, optimized builds |
-| Routing | React Router v7 | SPA routing |
-| Testing | Vitest | Same config as Vite, no extra setup |
+| Layer      | Technology            | Reason                              |
+| ---------- | --------------------- | ----------------------------------- |
+| UI         | React 19 + TypeScript | Industry standard, strict typing    |
+| Styling    | TailwindCSS v4        | Utility-first, zero runtime CSS     |
+| State      | Zustand               | Minimal boilerplate                 |
+| Validation | Zod                   | Type-safe runtime validation        |
+| Blockchain | @ton/ton, @ton/crypto | Official TON SDK                    |
+| Bundler    | Vite                  | Fast DX, optimized builds           |
+| Routing    | React Router v7       | SPA routing                         |
+| Testing    | Vitest                | Same config as Vite, no extra setup |
 
 ---
 
