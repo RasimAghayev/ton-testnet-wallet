@@ -1,9 +1,9 @@
-import type { Transaction } from '@/shared/types/transaction'
-import { TON_CONFIG } from '@/shared/config/ton'
-import { truncateAddress } from '@/shared/utils/format'
+import type { Transaction } from '@/shared/types/transaction';
+import { TON_CONFIG } from '@/shared/config/ton';
+import { truncateAddress } from '@/shared/utils/format';
 
 interface TransactionItemProps {
-  tx: Transaction
+  tx: Transaction;
 }
 
 function formatDate(timestamp: number) {
@@ -12,11 +12,11 @@ function formatDate(timestamp: number) {
     day: 'numeric',
     hour: '2-digit',
     minute: '2-digit',
-  })
+  });
 }
 
 export function TransactionItem({ tx }: TransactionItemProps) {
-  const isIn = tx.type === 'in'
+  const isIn = tx.type === 'in';
 
   return (
     <a
@@ -28,9 +28,7 @@ export function TransactionItem({ tx }: TransactionItemProps) {
       {/* Icon */}
       <div
         className={`w-9 h-9 rounded-full flex items-center justify-center text-sm shrink-0 ${
-          isIn
-            ? 'bg-emerald-900/50 text-emerald-400'
-            : 'bg-red-900/50 text-red-400'
+          isIn ? 'bg-emerald-900/50 text-emerald-400' : 'bg-red-900/50 text-red-400'
         }`}
       >
         {isIn ? '↓' : '↑'}
@@ -47,16 +45,12 @@ export function TransactionItem({ tx }: TransactionItemProps) {
 
       {/* Amount */}
       <div className="text-right shrink-0">
-        <p
-          className={`text-sm font-semibold ${
-            isIn ? 'text-emerald-400' : 'text-slate-200'
-          }`}
-        >
+        <p className={`text-sm font-semibold ${isIn ? 'text-emerald-400' : 'text-slate-200'}`}>
           {isIn ? '+' : '-'}
           {parseFloat(tx.amount).toFixed(4)} TON
         </p>
         <p className="text-xs text-slate-600">fee {tx.fee}</p>
       </div>
     </a>
-  )
+  );
 }

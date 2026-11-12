@@ -1,18 +1,18 @@
-import { useState } from 'react'
+import { useState } from 'react';
 
 interface CopyButtonProps {
-  text: string
-  label?: string
+  text: string;
+  label?: string;
 }
 
 export function CopyButton({ text, label = 'Copy' }: CopyButtonProps) {
-  const [copied, setCopied] = useState(false)
+  const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(text)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
+    await navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <button
@@ -31,5 +31,5 @@ export function CopyButton({ text, label = 'Copy' }: CopyButtonProps) {
         </>
       )}
     </button>
-  )
+  );
 }

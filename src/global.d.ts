@@ -1,5 +1,5 @@
-import { Buffer as BufferType } from 'buffer'
+import { Buffer as BufferType } from 'buffer';
 
 declare global {
-  var Buffer: typeof BufferType
+  var Buffer: typeof BufferType;
 }

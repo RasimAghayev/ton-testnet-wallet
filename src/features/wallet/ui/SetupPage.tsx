@@ -1,11 +1,11 @@
-import { useState } from 'react'
-import { CreateWallet } from './CreateWallet'
-import { ImportWallet } from './ImportWallet'
+import { useState } from 'react';
+import { CreateWallet } from './CreateWallet';
+import { ImportWallet } from './ImportWallet';
 
-type Tab = 'create' | 'import'
+type Tab = 'create' | 'import';
 
 export function SetupPage() {
-  const [tab, setTab] = useState<Tab>('create')
+  const [tab, setTab] = useState<Tab>('create');
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-slate-950">
@@ -18,7 +18,7 @@ export function SetupPage() {
 
         <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
           <div className="flex border-b border-slate-800">
-            {(['create', 'import'] as Tab[]).map((t) => (
+            {(['create', 'import'] as Tab[]).map(t => (
               <button
                 key={t}
                 onClick={() => setTab(t)}
@@ -33,9 +33,7 @@ export function SetupPage() {
             ))}
           </div>
 
-          <div className="p-5">
-            {tab === 'create' ? <CreateWallet /> : <ImportWallet />}
-          </div>
+          <div className="p-5">{tab === 'create' ? <CreateWallet /> : <ImportWallet />}</div>
         </div>
 
         {/* Testnet helpers */}
@@ -64,7 +62,8 @@ export function SetupPage() {
             <div>
               <p className="text-sm font-medium text-slate-300">Get API key</p>
               <p className="text-xs text-slate-500 mt-0.5">
-                @tonapibot — set <code className="text-slate-400">VITE_TON_API_KEY</code> in .env for higher rate limit
+                @tonapibot — set <code className="text-slate-400">VITE_TON_API_KEY</code> in .env
+                for higher rate limit
               </p>
             </div>
             <span className="text-slate-500">↗</span>
@@ -72,5 +71,5 @@ export function SetupPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

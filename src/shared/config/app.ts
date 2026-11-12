@@ -6,4 +6,4 @@ export const APP_CONFIG = {
     settings: 'ton_settings_v1',
   },
   balanceRefreshInterval: 15_000, // ms
-} as const
+} as const;

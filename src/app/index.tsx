@@ -1,6 +1,6 @@
-import { BrowserRouter } from 'react-router-dom'
-import { WalletProvider } from './providers/WalletProvider'
-import { AppRouter } from './router'
+import { BrowserRouter } from 'react-router-dom';
+import { WalletProvider } from './providers/WalletProvider';
+import { AppRouter } from './router';
 
 export function App() {
   return (
@@ -9,5 +9,5 @@ export function App() {
         <AppRouter />
       </WalletProvider>
     </BrowserRouter>
-  )
+  );
 }
