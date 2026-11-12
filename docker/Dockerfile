@@ -47,7 +47,7 @@ RUN npm run lint
 # ──────────────────────────────────────────────────────────────────────────────
 # Runtime: minimal nginx image, non-root, health checks
 # ──────────────────────────────────────────────────────────────────────────────
-FROM nginx:1.28.0-bookworm AS runner
+FROM nginx:1.29.1-bookworm AS runner
 
 # Create non-root user
 RUN addgroup -g 1001 -S nginx && \
