@@ -3,7 +3,7 @@
 # ──────────────────────────────────────────────────────────────────────────────
 # Base: pinned Node 22 LTS with glibc (required for Vite 8 / rolldown native bindings)
 # ──────────────────────────────────────────────────────────────────────────────
-FROM node:22.14.0-bookworm-slim AS base
+FROM node:22.23.5-bookworm-slim AS base
 
 WORKDIR /app
 
