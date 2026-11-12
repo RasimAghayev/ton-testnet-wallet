@@ -1,4 +1,4 @@
-﻿# syntax=docker/dockerfile:1.7
+﻿# syntax=docker/dockerfile:1.29
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Base: pinned Node 22 LTS with glibc (required for Vite 8 / rolldown native bindings)
