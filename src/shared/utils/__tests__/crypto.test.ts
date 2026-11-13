@@ -7,7 +7,8 @@ import {
   type EncryptedData,
 } from '../crypto';
 
-const PASSWORD = 'StrongPassword123!';
+// Throwaway fixture password, never a credential.
+const PASSWORD = 'StrongPassword123!'; // i-dont-think-this-is-a-secret
 const PAYLOAD = JSON.stringify({
   address: 'EQD4FPq-PRDieyQKkizFTRtSDyucUIqrj0v_zXJmqaDp6_0t',
   mnemonic: Array(24).fill('word'),

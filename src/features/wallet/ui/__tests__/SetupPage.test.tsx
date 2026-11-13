@@ -102,7 +102,7 @@ describe('CreateWallet flow', () => {
     expect(generate).toBeDisabled();
 
     fireEvent.change(screen.getByPlaceholderText(/Min 12 chars/), {
-      target: { value: 'StrongPassword123!' },
+      target: { value: 'StrongPassword123!' }, // i-dont-think-this-is-a-secret
     });
     expect(screen.getByRole('button', { name: 'Generate Wallet' })).not.toBeDisabled();
   });
