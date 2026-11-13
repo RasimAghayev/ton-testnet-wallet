@@ -113,22 +113,22 @@ describe('crypto — validatePasswordStrength', () => {
   });
 
   it('TC_CRYPTO_PWD_003 requires an uppercase letter', () => {
-    const result = validatePasswordStrength('lowercase123!');
+    const result = validatePasswordStrength('lowercase123!'); // i-dont-think-this-is-a-secret
     expect(result.errors).toContain('Password must contain at least one uppercase letter');
   });
 
   it('TC_CRYPTO_PWD_004 requires a lowercase letter', () => {
-    const result = validatePasswordStrength('UPPERCASE123!');
+    const result = validatePasswordStrength('UPPERCASE123!'); // i-dont-think-this-is-a-secret
     expect(result.errors).toContain('Password must contain at least one lowercase letter');
   });
 
   it('TC_CRYPTO_PWD_005 requires a digit', () => {
-    const result = validatePasswordStrength('NoDigitsHere!');
+    const result = validatePasswordStrength('NoDigitsHere!'); // i-dont-think-this-is-a-secret
     expect(result.errors).toContain('Password must contain at least one number');
   });
 
   it('TC_CRYPTO_PWD_006 requires a special character', () => {
-    const result = validatePasswordStrength('NoSpecial123');
+    const result = validatePasswordStrength('NoSpecial123'); // i-dont-think-this-is-a-secret
     expect(result.errors).toContain('Password must contain at least one special character');
   });
 
