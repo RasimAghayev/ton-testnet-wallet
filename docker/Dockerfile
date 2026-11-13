@@ -49,14 +49,21 @@ RUN npm run lint
 # ──────────────────────────────────────────────────────────────────────────────
 FROM nginx:1.29.1-bookworm AS runner
 
-# Create non-root user
-RUN addgroup -g 1001 -S nginx && \
-    adduser -S -D -H -u 1001 -h /var/cache/nginx -s /sbin/nologin -G nginx nginx
+# dumb-init for signal handling, curl for the health check.
+# The base image is Debian, not Alpine: it already ships the unprivileged
+# `nginx` user (uid 101), so no user is created here.
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends dumb-init curl && \
+    rm -rf /var/lib/apt/lists/*
 
 # Remove default config
 RUN rm /etc/nginx/conf.d/default.conf
 
-# Copy nginx config
+# Main config (pid and logs on writable paths) and http-level rate-limit zones
+COPY docker/nginx-main.conf /etc/nginx/nginx.conf
+COPY docker/nginx-ratelimit.conf /etc/nginx/conf.d/00-ratelimit.conf
+
+# Server block
 COPY docker/nginx.conf /etc/nginx/conf.d/app.conf
 
 # Copy built assets from build stage
@@ -68,6 +75,10 @@ RUN mkdir -p /usr/share/nginx/html/health && \
     echo "ready" > /usr/share/nginx/html/health/ready && \
     chown -R nginx:nginx /usr/share/nginx/html/health
 
+# nginx needs a writable cache directory when it drops privileges
+RUN mkdir -p /var/cache/nginx && \
+    chown -R nginx:nginx /var/cache/nginx
+
 # Switch to non-root user
 USER nginx
 
@@ -75,7 +86,7 @@ EXPOSE 8080
 
 # Health checks for liveness and readiness
 HEALTHCHECK --interval=30s --timeout=5s --retries=3 --start-period=10s \
-    CMD wget -qO- http://localhost:8080/health/live || exit 1
+    CMD curl -fsS http://localhost:8080/health/live || exit 1
 
 # Use dumb-init for proper signal handling
 ENTRYPOINT ["dumb-init", "--"]
