@@ -16,20 +16,13 @@ export function CopyButton({ text, label = 'Copy' }: CopyButtonProps) {
 
   return (
     <button
+      type="button"
       onClick={handleCopy}
+      aria-label={copied ? 'Copied' : label}
       className="inline-flex items-center gap-1.5 text-sm text-blue-400 hover:text-blue-300 transition-colors cursor-pointer"
     >
-      {copied ? (
-        <>
-          <span>✓</span>
-          <span>Copied!</span>
-        </>
-      ) : (
-        <>
-          <span>⧉</span>
-          <span>{label}</span>
-        </>
-      )}
+      <span aria-hidden="true">{copied ? '✓' : '⧉'}</span>
+      <span aria-live="polite">{copied ? 'Copied!' : label}</span>
     </button>
   );
 }

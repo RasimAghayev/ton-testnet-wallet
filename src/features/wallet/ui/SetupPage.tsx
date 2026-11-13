@@ -17,10 +17,13 @@ export function SetupPage() {
         </div>
 
         <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
-          <div className="flex border-b border-slate-800">
+          <div className="flex border-b border-slate-800" role="tablist" aria-label="Wallet setup">
             {(['create', 'import'] as Tab[]).map(t => (
               <button
                 key={t}
+                type="button"
+                role="tab"
+                aria-selected={tab === t}
                 onClick={() => setTab(t)}
                 className={`flex-1 py-3 text-sm font-medium transition-colors cursor-pointer ${
                   tab === t
