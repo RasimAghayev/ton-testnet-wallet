@@ -18,7 +18,9 @@ vi.mock('@ton/ton', () => {
     }
   }
   class TonClient {
-    constructor(readonly opts: unknown) {}
+    constructor(opts: unknown) {
+      void opts;
+    }
   }
   return { WalletContractV4, TonClient };
 });

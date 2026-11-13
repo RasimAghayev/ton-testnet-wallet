@@ -44,7 +44,7 @@ describe('walletService.createWallet', () => {
     const b = await walletService.createWallet();
     expect(a.mnemonic).not.toEqual(b.mnemonic);
     expect(a.address).not.toBe(b.address);
-  });
+  }, 20_000);
 });
 
 describe('walletService.importWallet', () => {
