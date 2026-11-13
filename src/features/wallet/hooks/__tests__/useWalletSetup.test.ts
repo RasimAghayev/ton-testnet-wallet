@@ -150,7 +150,7 @@ describe('useWalletSetup password handling', () => {
     const { result } = renderHook(() => useWalletSetup());
     act(() => {
       result.current.handleEncryptionToggle(true);
-      result.current.handlePasswordChange('StrongPassword123!');
+      result.current.handlePasswordChange('StrongPassword123!'); // i-dont-think-this-is-a-secret
       result.current.handleEncryptionToggle(false);
     });
     expect(result.current.enableEncryption).toBe(false);
@@ -166,7 +166,7 @@ describe('useWalletSetup password handling', () => {
     act(() => result.current.handleEncryptionToggle(true));
     expect(result.current.canSubmit()).toBe(false);
 
-    act(() => result.current.handlePasswordChange('StrongPassword123!'));
+    act(() => result.current.handlePasswordChange('StrongPassword123!')); // i-dont-think-this-is-a-secret
     expect(result.current.canSubmit()).toBe(true);
   });
 });

@@ -24,7 +24,7 @@ import { storageService } from '../storage.service';
 import { encryptData } from '@/shared/utils/crypto';
 
 const WALLET_KEY = 'ton_wallet_v1';
-const PASSWORD = 'StrongPassword123!';
+const PASSWORD = 'StrongPassword123!'; // i-dont-think-this-is-a-secret
 const WALLET = {
   address: 'EQD4FPq-PRDieyQKkizFTRtSDyucUIqrj0v_zXJmqaDp6_0t',
   publicKey: 'abc123publickey',

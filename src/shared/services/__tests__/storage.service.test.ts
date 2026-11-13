@@ -69,7 +69,7 @@ describe('storageService', () => {
   });
 
   it('encrypts and decrypts wallet with password', async () => {
-    const password = 'StrongPassword123!';
+    const password = 'StrongPassword123!'; // i-dont-think-this-is-a-secret
     await storageService.saveWallet(MOCK_WALLET, password);
     const loaded = await storageService.loadWallet(password);
     expect(loaded).toEqual(MOCK_WALLET);
@@ -77,14 +77,14 @@ describe('storageService', () => {
   });
 
   it('returns null when wrong password provided', async () => {
-    const password = 'StrongPassword123!';
+    const password = 'StrongPassword123!'; // i-dont-think-this-is-a-secret
     await storageService.saveWallet(MOCK_WALLET, password);
     const loaded = await storageService.loadWallet('WrongPassword123!');
     expect(loaded).toBeNull();
   });
 
   it('throws error when loading encrypted wallet without password', async () => {
-    const password = 'StrongPassword123!';
+    const password = 'StrongPassword123!'; // i-dont-think-this-is-a-secret
     await storageService.saveWallet(MOCK_WALLET, password);
     const loaded = await storageService.loadWallet();
     expect(loaded).toBeNull();
